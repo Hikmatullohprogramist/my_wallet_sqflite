@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:my_wallet_sqflite/data/model/kirim_chiqim_model/chiqim_model.dart';
 import 'package:my_wallet_sqflite/data/model/kirim_chiqim_model/kirim_chiqim_model.dart';
 import 'package:my_wallet_sqflite/data/service/service.dart';
 import 'package:my_wallet_sqflite/pages/home/home_page.dart';
@@ -14,6 +15,20 @@ class KirimChiqimViewModel extends GetxController {
         narx: kirimModel.narx,
         izoh: kirimModel.izoh,
         sana: kirimModel.sana,
+      ),
+    );
+    changeLoading();
+    Get.offAll(const HomePage());
+  }
+
+  addChiqim(ChiqimModel chiqimModel) async {
+    changeLoading();
+    LocalDataBases().chiqimAdd(
+      ChiqimModel(
+        id: chiqimModel.id,
+        narx: chiqimModel.narx,
+        izoh: chiqimModel.izoh,
+        sana: chiqimModel.sana,
       ),
     );
     changeLoading();

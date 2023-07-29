@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:my_wallet_sqflite/data/model/kirim_chiqim_model/chiqim_model.dart';
 import 'package:my_wallet_sqflite/data/model/kirim_chiqim_model/kirim_chiqim_model.dart';
 import 'package:my_wallet_sqflite/pages/add/add_kirim_chiqim_model.dart';
 
@@ -35,7 +36,6 @@ class _AddPageState extends State<AddPage> {
       selected = 2;
     });
   }
-
 
   int uniqueID = 2;
 
@@ -162,7 +162,6 @@ class _AddPageState extends State<AddPage> {
                         DateTime.now(),
                       );
                       if (isSelected_1) {
-
                         model.addKirim(
                           KirimModel(
                             narx: price.text.trim(),
@@ -171,7 +170,13 @@ class _AddPageState extends State<AddPage> {
                           ),
                         );
                       } else {
-                        // model.addChiqim(title.text.trim(), price.text.trim());
+                        model.addChiqim(
+                          ChiqimModel(
+                            narx: price.text.trim(),
+                            izoh: title.text.trim(),
+                            sana: DateTime.parse(date),
+                          ),
+                        );
                       }
                     },
                     child: Container(

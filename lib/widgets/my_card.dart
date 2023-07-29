@@ -1,12 +1,16 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class MyCard extends StatelessWidget {
   final String cardName;
-  final num balance;
+  final String balance;
   final int expariedYear;
   final int expariedMonth;
   final int cardNumber;
+  final String kirim;
+  final String chiqim;
 
   // ignore: prefer_typing_uninitialized_variables
   final color;
@@ -19,10 +23,16 @@ class MyCard extends StatelessWidget {
     required this.cardNumber,
     required this.color,
     required this.cardName,
+    required this.kirim,
+    required this.chiqim,
   });
 
   @override
   Widget build(BuildContext context) {
+    double balanceValue = double.tryParse(balance) ?? 0.0;
+    bool isBalanceNegative = balanceValue < 0;
+
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: Container(
@@ -47,12 +57,11 @@ class MyCard extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-
             Text(
               " ${NumberFormat.currency(
                 locale: "Uz-uz",
                 decimalDigits: 1,
-              ).format(balance)}",
+              ).format(balanceValue)}",
               style: const TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -61,26 +70,28 @@ class MyCard extends StatelessWidget {
             const SizedBox(
               height: 6,
             ),
-            const Row(
+            Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.arrow_downward,
                   color: Colors.green,
                   size: 15,
                 ),
                 Text(
-                  "200 000 UZS",
-                  style: TextStyle(color: Colors.white),
+                  "$kirim",
+                  style: const TextStyle(color: Colors.white),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_upward,
                   color: Colors.red,
                   size: 15,
                 ),
-                Text("150 000 UZS", style: TextStyle(color: Colors.white)),
+                Text(
+                    "$chiqim",
+                    style: const TextStyle(color: Colors.white)),
               ],
             ),
             const SizedBox(height: 30),

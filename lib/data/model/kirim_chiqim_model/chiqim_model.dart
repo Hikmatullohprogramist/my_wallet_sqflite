@@ -1,16 +1,13 @@
-import 'package:json_annotation/json_annotation.dart';
 
 
 class ChiqimModel {
-  int id;
-  int? userId;
+  int? id;
   String? narx;
-  String izoh;
+  String? izoh;
   DateTime sana;
 
   ChiqimModel({
-    required this.id,
-    required this.userId,
+    this.id,
     required this.narx,
     required this.izoh,
     required this.sana,
@@ -19,20 +16,18 @@ class ChiqimModel {
   factory ChiqimModel.fromJson(Map<String, dynamic> json) {
     return ChiqimModel(
       id: json["id"],
-      userId: json["userId"],
       narx: json["narx"],
       izoh: json["izoh"],
-      sana: json["sana"],
+      sana: DateTime.parse(json['sana']),
     );
   }
 
   toJson() {
     return {
       "id": id,
-      "userId": userId,
       "narx": narx,
       "izoh": izoh,
-      "sana": sana,
+      "sana": sana.toIso8601String(),
     };
   }
 }

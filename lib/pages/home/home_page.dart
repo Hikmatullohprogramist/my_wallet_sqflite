@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
       isSelected_1 = false;
       isSelected_2 = true;
       isSelected_3 = false;
-      // model.getChiqim();
+      model.getChiqim();
     });
   }
 
@@ -127,31 +127,43 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 height: 10,
               ),
-              SizedBox(
-                height: 200,
-                child: PageView(
-                  controller: _controller,
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    MyCard(
-                      cardName: "Chontak",
-                      balance: 252.300,
-                      cardNumber: 9862,
-                      color: Colors.deepPurple[400],
-                      expariedMonth: 14,
-                      expariedYear: 25,
+              Obx(() {
+                if (model.isLoading.value == false) {
+                  return SizedBox(
+                    height: 200,
+                    child: PageView(
+                      controller: _controller,
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        MyCard(
+                          cardName: "Chontak",
+                          balance: model.jamiSum.value,
+                          cardNumber: 9862,
+                          color: Colors.deepPurple[400],
+                          expariedMonth: 14,
+                          expariedYear: 25,
+                          kirim: model.kirimSum.value,
+                          chiqim: model.kirimSum.value,
+                        ),
+                        MyCard(
+                          cardName: "Plastik humo",
+                          balance: model.jamiSum.value,
+                          cardNumber: 9862,
+                          color: Colors.orange[400],
+                          expariedMonth: 14,
+                          expariedYear: 25,
+                          kirim: model.kirimSum.value,
+                          chiqim: model.kirimSum.value,
+                        ),
+                      ],
                     ),
-                    MyCard(
-                      cardName: "Plastik humo",
-                      balance: 954.300,
-                      cardNumber: 9862,
-                      color: Colors.orange[400],
-                      expariedMonth: 14,
-                      expariedYear: 25,
-                    ),
-                  ],
-                ),
-              ),
+                  );
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              }),
               const SizedBox(
                 height: 25,
               ),
@@ -317,7 +329,11 @@ class _HomePageState extends State<HomePage> {
                                     motion: const DrawerMotion(),
                                     children: [
                                       SlidableAction(
-                                        onPressed: (context) {},
+                                        onPressed: (context) {
+                                          Get.to(EditKirimChiqim(
+                                            chiqimModel: item,
+                                          ));
+                                        },
                                         icon: Icons.edit,
                                         borderRadius: BorderRadius.circular(14),
                                       ),
@@ -328,7 +344,7 @@ class _HomePageState extends State<HomePage> {
                                     children: [
                                       SlidableAction(
                                         onPressed: (context) {
-                                          // model.deleteChiqim(item.id);
+                                          model.deleteChiqim(item.id);
                                         },
                                         icon: Icons.delete,
                                         backgroundColor: Colors.red,

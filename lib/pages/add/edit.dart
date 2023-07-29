@@ -1,23 +1,28 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:my_wallet_sqflite/data/model/kirim_chiqim_model/chiqim_model.dart';
 import 'package:my_wallet_sqflite/data/model/kirim_chiqim_model/kirim_chiqim_model.dart';
 import 'package:my_wallet_sqflite/pages/home/home_view_model.dart';
 
 class EditKirimChiqim extends StatelessWidget {
-  final KirimModel kirimModel;
+  final KirimModel? kirimModel;
+  final ChiqimModel? chiqimModel;
 
   const EditKirimChiqim({
     super.key,
-    required this.kirimModel,
+    this.kirimModel,
+    this.chiqimModel,
   });
 
   @override
   Widget build(BuildContext context) {
     TextEditingController titleCtrl = TextEditingController();
     TextEditingController priceCtrl = TextEditingController();
-    priceCtrl.text = kirimModel.narx!;
-    titleCtrl.text = kirimModel.izoh!;
+    priceCtrl.text = kirimModel.isNull ? chiqimModel!.narx! : kirimModel!.narx!;
+    titleCtrl.text = (kirimModel.isNull ? chiqimModel!.izoh : kirimModel!.izoh!)!;
     HomeViewModel model = Get.put(HomeViewModel());
     DateFormat formatter = DateFormat('yyyy-MM-dd');
     var date = formatter.format(
@@ -78,18 +83,26 @@ class EditKirimChiqim extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
+
                       onTap: () {
-                        model.updateKirim(
-                          KirimModel(
-                            id: kirimModel.id,
-                            narx: priceCtrl.text,
-                            izoh: titleCtrl.text,
-                            sana: DateTime.parse(date),
-                          ),
+                        kirimModel.isNull
+                            ? model.updateChiqim(
+                                ChiqimModel(
+                                  id: chiqimModel!.id,
 
-
-                        );
-                        print(kirimModel.id);
+                                  narx: priceCtrl.text,
+                                  izoh: titleCtrl.text,
+                                  sana: DateTime.parse(date),
+                                ),
+                              )
+                            : model.updateKirim(
+                                KirimModel(
+                                  id: kirimModel!.id,
+                                  narx: priceCtrl.text,
+                                  izoh: titleCtrl.text,
+                                  sana: DateTime.parse(date),
+                                ),
+                              );
                       },
                       child: Container(
                         height: 50,
