@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:my_wallet_sqflite/data/model/kirim_chiqim_model/kirim_chiqim_model.dart';
 import 'package:my_wallet_sqflite/pages/add/add_kirim_chiqim_model.dart';
-import 'package:uuid/uuid.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({super.key});
@@ -158,7 +157,7 @@ class _AddPageState extends State<AddPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
+                      DateFormat formatter = DateFormat('yyyy-MM-dd');
                       var date = formatter.format(
                         DateTime.now(),
                       );

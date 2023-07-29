@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:my_wallet_sqflite/data/model/kirim_chiqim_model/kirim_chiqim_model.dart';
 import 'package:my_wallet_sqflite/pages/home/home_view_model.dart';
 
@@ -15,9 +16,13 @@ class EditKirimChiqim extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController titleCtrl = TextEditingController();
     TextEditingController priceCtrl = TextEditingController();
-    priceCtrl.text = kirimModel.izoh!;
-    titleCtrl.text = kirimModel.narx.toString();
+    priceCtrl.text = kirimModel.narx!;
+    titleCtrl.text = kirimModel.izoh!;
     HomeViewModel model = Get.put(HomeViewModel());
+    DateFormat formatter = DateFormat('yyyy-MM-dd');
+    var date = formatter.format(
+      DateTime.now(),
+    );
     return Scaffold(
         backgroundColor: Colors.grey[200],
         body: Padding(
@@ -57,7 +62,7 @@ class EditKirimChiqim extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     GestureDetector(
-                      onTap: ()=>Get.back(),
+                      onTap: () => Get.back(),
                       child: Container(
                         height: 50,
                         width: 100,
@@ -74,12 +79,17 @@ class EditKirimChiqim extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // model.updateKirim(
-                        //   kirimModel.izoh!,
-                        //   kirimModel.narx.toString(),
-                        //   kirimModel.id,
-                        // );
+                        model.updateKirim(
+                          KirimModel(
+                            id: kirimModel.id,
+                            narx: priceCtrl.text,
+                            izoh: titleCtrl.text,
+                            sana: DateTime.parse(date),
+                          ),
 
+
+                        );
+                        print(kirimModel.id);
                       },
                       child: Container(
                         height: 50,

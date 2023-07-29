@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings, avoid_print
 
 import 'package:get/get.dart';
+import 'package:my_wallet_sqflite/data/model/kirim_chiqim_model/kirim_chiqim_model.dart';
 import 'package:my_wallet_sqflite/data/service/service.dart';
 
 class HomeViewModel extends GetxController {
@@ -26,13 +27,13 @@ class HomeViewModel extends GetxController {
     changeLoading();
   }
   //
-  // updateKirim(String title, String price, int id) async {
-  //   changeLoading();
-  //   await ApiService().updateKirim(title, price, id);
-  //   changeLoading();
-  //   getKirim();
-  //   Get.back();
-  // }
+  updateKirim(KirimModel kirimModel) async {
+    changeLoading();
+    await LocalDataBases().updateKirim(kirimModel);
+    changeLoading();
+    getKirim();
+    Get.back();
+  }
   //
   // getChiqim() async {
   //   changeLoading();

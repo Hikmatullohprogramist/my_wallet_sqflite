@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:my_wallet_sqflite/data/model/kirim_chiqim_model/kirim_chiqim_model.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -108,26 +109,32 @@ class LocalDataBases {
 
     db.delete(tableNameKirim, where: "id = ?", whereArgs: [id]);
   }
-//    KIRIM UPDATE
 
-// Future updateMind(MindModel mindModel, String mind) async {
-//   Database? db = await getDb();
-//
-//   var id = await db.update(
-//     tableName,
-//     mindModel.toJson(),
-//     where: "mind = ?",
-//     whereArgs: [mind],
-//   );
-//
-//   if (kDebugMode) {
-//     print("Update boldi");
-//   }
-// }
-//
-// Future deleteMind(String mind) async {
-//   Database? db = await getDb();
-//
-//   db.delete(tableName, where: "mind = ?", whereArgs: [mind]);
-// }
+//    KIRIM UPDATE
+  Future<void> updateKirim(KirimModel kirimModel) async {
+    try {
+      Database db = await getKirimDb();
+      var id = await db.update(
+        tableNameKirim,
+        {
+          'narx': kirimModel.narx,
+          'izoh': kirimModel.izoh,
+          'sana': kirimModel.sana.toIso8601String(),
+          // Convert DateTime to ISO 8601 string
+        },
+        where: "id = ?",
+        whereArgs: [
+          kirimModel.id,
+        ],
+      );
+
+      if (kDebugMode) {
+        print(kirimModel.id);
+        print("Updated $id row(s)");
+      }
+    } catch (e) {
+      print("Error while updating kirim: $e");
+      // Handle the error gracefully here, such as showing an error message to the user.
+    }
+  }
 }
